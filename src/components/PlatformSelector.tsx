@@ -32,6 +32,7 @@ const PlatformSelector = ({ onSelectPlatform, selectedPlatform }: Props) => {
             fontWeight={
               selectedPlatform?.id === platform.id ? "bold" : "normal"
             }
+            color={selectedPlatform?.id === platform.id ? "#b994eb" : ""}
             onClick={() => onSelectPlatform(platform)}
             key={platform.id}
           >
