@@ -19,6 +19,8 @@ interface Props {
 const GenreList = ({ onSelectGenre, selectedGenre }: Props) => {
   const { data: genres, error, isLoading } = useGenres();
 
+  //isLoading Spinner can be removed when using when using the
+  //  harcoded Genres in ../data/genres.ts
   if (isLoading) return <Spinner />;
 
   return (
@@ -26,6 +28,8 @@ const GenreList = ({ onSelectGenre, selectedGenre }: Props) => {
       <Heading fontSize="2xl" marginBottom={3}>
         Genres
       </Heading>
+      {/* the error check can be removed when using when using the
+      harcoded Genres in ../data/genres.ts */}
       {error && <Text>{error}</Text>}
       <List>
         {genres.map((genre) => (
