@@ -3,7 +3,6 @@ import useGames, { Platform } from "../hooks/useGames";
 import GameCard from "./GameCard";
 import GameCardSkeleton from "./GameCardSkeleton";
 import GameCardContainer from "./GameCardContainer";
-import { Genre } from "../hooks/useGenres";
 import { GameQuery } from "../App";
 
 interface Props {
@@ -30,6 +29,7 @@ const GamesGrid = ({ gameQuery }: Props) => {
               <GameCardSkeleton key={skeleton} />
             </GameCardContainer>
           ))}
+        {games.length === 0 && <p>No reults found!</p>}
         {games.map((game) => (
           <GameCard key={game.id} game={game} />
         ))}
