@@ -51,7 +51,6 @@ function App() {
           <SortSelector
             selectedSort={gameQuery.sortBy}
             onSelectSortOrder={(sortBy) => {
-              console.log(sortBy);
               setGameQuery({ ...gameQuery, sortBy });
             }}
           />
