@@ -27,7 +27,7 @@ const PlatformSelector = ({ onSelectPlatform, selectedPlatform }: Props) => {
       </MenuButton>
       <MenuList>
         {isLoading ? <Spinner /> : ""}
-        {platforms.map((platform) => (
+        {platforms?.map((platform) => (
           <MenuItem
             fontWeight={
               selectedPlatform?.id === platform.id ? "bold" : "normal"
