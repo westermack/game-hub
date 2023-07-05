@@ -28,15 +28,23 @@ const SortSelector = ({ onSelectSortOrder, selectedSort }: Props) => {
   return (
     <Menu>
       <MenuButton as={Button} rightIcon={<BsChevronDown />}>
-        Sort by: {selectedSort?.label}
+        Sort by: {selectedSort?.label || "Relevance"}
       </MenuButton>
       <MenuList>
         {sortItems.map((sortOrder, i) => (
           <MenuItem
             fontWeight={
-              selectedSort?.value === sortOrder.value ? "bold" : "normal"
+              selectedSort?.value === sortOrder.value ||
+              (!selectedSort && sortOrder.value === "")
+                ? "bold"
+                : "normal"
             }
-            color={selectedSort?.value === sortOrder.value ? "#b994eb" : ""}
+            color={
+              selectedSort?.value === sortOrder.value ||
+              (!selectedSort && sortOrder.value === "")
+                ? "#b994eb"
+                : ""
+            }
             onClick={() => onSelectSortOrder(sortOrder)}
             key={i}
           >
