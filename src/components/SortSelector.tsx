@@ -26,14 +26,14 @@ const SortSelector = ({ onSelectSortOrder, selectedSort }: Props) => {
         {sortItems.map((sortOrder, i) => (
           <MenuItem
             fontWeight={
-              selectedSort?.value === sortOrder.value ||
-              (!selectedSort && sortOrder.value === "")
+              selectedSort?.value === sortOrder.value /* ||
+              (!selectedSort && sortOrder.value === "") */
                 ? "bold"
                 : "normal"
             }
             color={
-              selectedSort?.value === sortOrder.value ||
-              (!selectedSort && sortOrder.value === "")
+              selectedSort?.value === sortOrder.value /* ||
+              (!selectedSort && sortOrder.value === "") */
                 ? "#b994eb"
                 : ""
             }
