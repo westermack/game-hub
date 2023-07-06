@@ -4,7 +4,7 @@ import { Sort } from "../hooks/useGames";
 
 interface Props {
   onSelectSortOrder: (sortOrder: Sort) => void;
-  selectedSort: Sort;
+  selectedSort: string;
 }
 
 const SortSelector = ({ onSelectSortOrder, selectedSort }: Props) => {
@@ -17,22 +17,24 @@ const SortSelector = ({ onSelectSortOrder, selectedSort }: Props) => {
     { value: "-rating", label: "Average rating" },
   ];
 
+  const sort = sortItems.find((item) => item.value === selectedSort);
+
   return (
     <Menu>
       <MenuButton as={Button} rightIcon={<BsChevronDown />}>
-        Sort by: {selectedSort?.label || "Relevance"}
+        Sort by: {sort?.label || "Relevance"}
       </MenuButton>
       <MenuList>
         {sortItems.map((sortOrder, i) => (
           <MenuItem
             fontWeight={
-              selectedSort?.value === sortOrder.value /* ||
+              selectedSort === sortOrder.value /* ||
               (!selectedSort && sortOrder.value === "") */
                 ? "bold"
                 : "normal"
             }
             color={
-              selectedSort?.value === sortOrder.value /* ||
+              selectedSort === sortOrder.value /* ||
               (!selectedSort && sortOrder.value === "") */
                 ? "#b994eb"
                 : ""

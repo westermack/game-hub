@@ -11,27 +11,28 @@ import usePlatforms, { Platform } from "../hooks/usePlatforms";
 
 interface Props {
   onSelectPlatform: (platform: Platform) => void;
-  selectedPlatform: Platform | null;
+  selectedPlatformId?: number;
 }
 
-const PlatformSelector = ({ onSelectPlatform, selectedPlatform }: Props) => {
+const PlatformSelector = ({ onSelectPlatform, selectedPlatformId }: Props) => {
   const { data: platforms, error, isLoading } = usePlatforms();
+  const platform = platforms?.results.find(
+    (platform) => platform.id === selectedPlatformId
+  );
 
   if (error) return null;
 
   return (
     <Menu>
       <MenuButton as={Button} rightIcon={<BsChevronDown />}>
-        {selectedPlatform?.name || "Platforms"}
+        {platform?.name || "Platforms"}
       </MenuButton>
       <MenuList>
         {isLoading ? <Spinner /> : ""}
         {platforms?.results.map((platform) => (
           <MenuItem
-            fontWeight={
-              selectedPlatform?.id === platform.id ? "bold" : "normal"
-            }
-            color={selectedPlatform?.id === platform.id ? "#b994eb" : ""}
+            fontWeight={selectedPlatformId === platform.id ? "bold" : "normal"}
+            color={selectedPlatformId === platform.id ? "#b994eb" : ""}
             onClick={() => onSelectPlatform(platform)}
             key={platform.id}
           >

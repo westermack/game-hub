@@ -1,19 +1,17 @@
 import { Box, Grid, GridItem, HStack, Show } from "@chakra-ui/react";
-import NavBar from "./components/NavBar/NavBar";
+import { useState } from "react";
+import GameHeading from "./components/GameHeading";
 import GamesGrid from "./components/GamesGrid";
 import GenreList from "./components/GenreList";
-import { useState } from "react";
-import { Genre } from "./hooks/useGenres";
+import NavBar from "./components/NavBar/NavBar";
 import PlatformSelector from "./components/PlatformSelector";
-import { Sort } from "./hooks/useGames";
-import { Platform } from "./hooks/usePlatforms";
 import SortSelector from "./components/SortSelector";
-import GameHeading from "./components/GameHeading";
+import { Sort } from "./hooks/useGames";
 
 export interface GameQuery {
-  genre: Genre | null;
-  platform: Platform | null;
-  sortBy: Sort;
+  genreId?: number;
+  platformId?: number;
+  sortBy: string;
   searchText: string;
 }
 
@@ -41,8 +39,10 @@ function App() {
       <Show above="lg">
         <GridItem area="aside" paddingX={5} marginTop="18px">
           <GenreList
-            selectedGenre={gameQuery.genre}
-            onSelectGenre={(genre) => setGameQuery({ ...gameQuery, genre })}
+            selectedGenreId={gameQuery.genreId}
+            onSelectGenre={(genre) =>
+              setGameQuery({ ...gameQuery, genreId: genre.id })
+            }
           />
         </GridItem>
       </Show>
@@ -52,15 +52,15 @@ function App() {
           <GameHeading gameQuery={gameQuery} />
           <HStack spacing={4} marginBottom={3}>
             <PlatformSelector
-              selectedPlatform={gameQuery.platform}
+              selectedPlatformId={gameQuery.platformId}
               onSelectPlatform={(platform) =>
-                setGameQuery({ ...gameQuery, platform })
+                setGameQuery({ ...gameQuery, platformId: platform.id })
               }
             />
             <SortSelector
               selectedSort={gameQuery.sortBy}
               onSelectSortOrder={(sortBy) => {
-                setGameQuery({ ...gameQuery, sortBy });
+                setGameQuery({ ...gameQuery, sortBy: sortBy.value });
               }}
             />
           </HStack>
