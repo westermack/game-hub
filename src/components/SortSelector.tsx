@@ -1,13 +1,8 @@
 import { Button, Menu, MenuButton, MenuItem, MenuList } from "@chakra-ui/react";
 import { BsChevronDown } from "react-icons/bs";
-import { Sort } from "../hooks/useGames";
+import useGameQueryStore from "../store";
 
-interface Props {
-  onSelectSortOrder: (sortOrder: Sort) => void;
-  selectedSort: string;
-}
-
-const SortSelector = ({ onSelectSortOrder, selectedSort }: Props) => {
+const SortSelector = () => {
   const sortItems = [
     { value: "", label: "Relevance" },
     { value: "-added", label: "Date added" },
@@ -17,32 +12,32 @@ const SortSelector = ({ onSelectSortOrder, selectedSort }: Props) => {
     { value: "-rating", label: "Average rating" },
   ];
 
-  const sort = sortItems.find((item) => item.value === selectedSort);
+  const setSelectedSortValue = useGameQueryStore(
+    (selector) => selector.setSortBy
+  );
+
+  const selectedSortValue = useGameQueryStore(
+    (selector) => selector.gameQuery.sortBy
+  );
+
+  const selectedSortItem = sortItems.find(
+    (item) => item.value === selectedSortValue
+  );
 
   return (
     <Menu>
       <MenuButton as={Button} rightIcon={<BsChevronDown />}>
-        Sort by: {sort?.label || "Relevance"}
+        Sort by: {selectedSortItem?.label || "Relevance"}
       </MenuButton>
       <MenuList>
-        {sortItems.map((sortOrder, i) => (
+        {sortItems.map((item, i) => (
           <MenuItem
-            fontWeight={
-              selectedSort === sortOrder.value /* ||
-              (!selectedSort && sortOrder.value === "") */
-                ? "bold"
-                : "normal"
-            }
-            color={
-              selectedSort === sortOrder.value /* ||
-              (!selectedSort && sortOrder.value === "") */
-                ? "#b994eb"
-                : ""
-            }
-            onClick={() => onSelectSortOrder(sortOrder)}
+            fontWeight={selectedSortValue === item.value ? "bold" : "normal"}
+            color={selectedSortValue === item.value ? "#b994eb" : ""}
+            onClick={() => setSelectedSortValue(item.value)}
             key={i}
           >
-            {sortOrder.label}
+            {item.label}
           </MenuItem>
         ))}
       </MenuList>
