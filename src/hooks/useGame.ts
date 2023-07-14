@@ -1,8 +1,13 @@
-import useGenres from "./useGenres";
+import { useQuery } from "@tanstack/react-query";
+import APIClient from "../services/api-client";
+import { Game } from "./useGames";
 
-const useGenre = (id?: number) => {
-  const { data: genres } = useGenres();
-  return genres?.results.find((genre) => genre.id === id);
-};
+const apiClient = new APIClient<Game>("/games");
 
-export default useGenre;
+const useGame = (slug: string) =>
+  useQuery({
+    queryKey: ["games", slug],
+    queryFn: () => apiClient.get(slug),
+  });
+
+export default useGame;
